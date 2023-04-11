@@ -451,7 +451,7 @@
         var start_block = {
             type: jsPsychHtmlKeyboardResponse,
             stimulus: function () {
-                var stakes_data = curr_block_stakes(blocks_stakes[block])
+                var stakes_data = curr_block_stakes(block)
                 return '<p><b><u>Test block ' + (block + 1) + ' out of ' + (blocks) + '</u></b></p>' + '<p style="text-align: left"> You will now start a test block. Below are the four cards that can appear in this round.</p>'
                     + '<p style="text-align: left"> This is a <b><u>' + (stakes_data[0])+ '</u></b> block, which means you will earn ' + (stakes_data[1]) + ' for every correct response.</p>'
                     + '<p style="text-align: left">Use the LEFT or RIGHT response keys (‘s’ or ‘k’, in correspondence) to make your selection. <br> Please do your best to win as many coins as possible!<br> </p>'
