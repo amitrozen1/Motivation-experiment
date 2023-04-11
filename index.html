@@ -555,7 +555,7 @@
             choices: "NO_KEYS",
             trial_duration: 750,
             data: {
-                phase: 'exp', trial_name: 'reward2', trial_num: function () { return current_cards_exp_trial }, block: function () { return block },mapping: mapping,},
+                phase: 'exp', trial_name: 'reward2', trial_num: function () { return current_cards_exp_trial }, block: function () { return block }, block_stakes : function () {return blocks_stakes[block]}, mapping: mapping,},
                 
             on_finish: function (data) {
                 current_cards_exp_trial += 1;
