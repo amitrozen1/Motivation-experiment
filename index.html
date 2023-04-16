@@ -465,7 +465,7 @@
             on_finish: function () { document.querySelector('head').insertAdjacentHTML('beforeend', '<style id="cursor-toggle"> html { cursor: none; } </style>') },
         }
 
-        var exp_cards1 = {
+        var exp_cards = {
             type: jsPsychHtmlKeyboardResponse,
             //prompt: '<div style="position: absolute; padding-top: 25px; margin: auto;"><h2>' +curr_block_stakes(block)[0] + '</h2></div><br><br><br>',
             //prompt: '<div style="position: absolute; text-align: center;" and a "left: 0; right: 0; top: 5%;"><h2>' +curr_block_stakes(block)[0] + '</h2></div><br><br><br>' ,
@@ -478,7 +478,7 @@
 
         }
 
-        var exp_choice1 = {
+        var exp_choice = {
             type: jsPsychHtmlKeyboardResponse,
             stimulus: show_choice,
             choices: "NO_KEYS",
@@ -494,60 +494,8 @@
                 }
             }
         }
-        var exp_reward1 = {
-            type: jsPsychHtmlKeyboardResponse,
-            stimulus: function () {
-                return show_reward(current_cards_exp_trial)
-            },
-            choices: "NO_KEYS",
-            trial_duration: 750,
-            data: {
-                phase: 'exp', trial_name: 'reward1', trial_num: function () { return current_cards_exp_trial }, block: function () { return block }},
-
-            on_finish: function (data) {
-                data.reward = reward;
-                data.key_selected = selected
-                if (selected == 0) {
-                    data.card_selected = images_for_block_start().indexOf(left_card)
-                }
-                else if (selected == 1) {
-                    data.card_selected = images_for_block_start().indexOf(right_card)
-                }
-            }
-        }
-
-        var exp_cards2 = {
-            type: jsPsychHtmlKeyboardResponse,
-            stimulus: function () {
-                left_card = drawn_cards[2];
-                right_card = drawn_cards[3];
-                left_with_tag = "<img class='card_left' src='" + left_card + "'>"
-                right_with_tag = "<img class='card_right' src='" + right_card + "'>"
-                return left_with_tag + right_with_tag + fixation;
-            },
-            choices: ['s', 'k'],
-            trial_duration: 6000,
-            data: { phase: 'exp', trial_name: 'cards2', trial_num: function () { return current_cards_exp_trial } },
-
-        }
-
-        var exp_choice2 = {
-            type: jsPsychHtmlKeyboardResponse,
-            stimulus: show_choice,
-            choices: "NO_KEYS",
-            trial_duration: 500,
-            data: { phase: 'exp', trial_name: 'choice2', trial_num: function () { return current_cards_exp_trial } },
-            on_finish: function (data) {
-                data.key_selected = selected
-                if (selected == 0) {
-                    data.card_selected = images_for_block_start().indexOf(left_card)
-                }
-                else if (selected == 1) {
-                    data.card_selected = images_for_block_start().indexOf(right_card)
-                }
-            }
-        }
-        var exp_reward2 = {
+        
+        var exp_reward = {
             type: jsPsychHtmlKeyboardResponse,
             stimulus: function () {
                 return show_reward(current_cards_exp_trial)
@@ -622,25 +570,25 @@
 
         var test_procedure_cards_block1 = {
             prompt: '<div style="position: absolute; text-align: center; left: 0; right: 0; top: 5%;"><h2>' +curr_block_stakes(0)[0] + '</h2></div><br><br><br>' ,
-            timeline: [fixation_cards, exp_cards1, exp_choice1, exp_reward1, fixation_cards, exp_cards2, exp_choice2, exp_reward2],
+            timeline: [fixation_cards, exp_cards, exp_choice, exp_reward],
             repetitions: 50 // 10sec per trial - 50 trials per block.
         }
 
         var test_procedure_cards_block2 = {
             prompt: '<div style="position: absolute; text-align: center; left: 0; right: 0; top: 5%;"><h2>' +curr_block_stakes(1)[0] + '</h2></div><br><br><br>' ,
-            timeline: [fixation_cards, exp_cards1, exp_choice1, exp_reward1, fixation_cards, exp_cards2, exp_choice2, exp_reward2],
+            timeline: [fixation_cards, exp_cards, exp_choice, exp_reward],
             repetitions: 50 // 10sec per trial - 50 trials per block.
         }
 
         var test_procedure_cards_block3 = {
             prompt: '<div style="position: absolute; text-align: center; left: 0; right: 0; top: 5%;"><h2>' +curr_block_stakes(2)[0] + '</h2></div><br><br><br>' ,
-            timeline: [fixation_cards, exp_cards1, exp_choice1, exp_reward1, fixation_cards, exp_cards2, exp_choice2, exp_reward2],
+            timeline: [fixation_cards, exp_cards, exp_choice, exp_reward],
             repetitions: 50 // 10sec per trial - 50 trials per block.
         }
 
         var test_procedure_cards_block4 = {
             prompt: '<div style="position: absolute; text-align: center; left: 0; right: 0; top: 5%;"><h2>' +curr_block_stakes(3)[0] + '</h2></div><br><br><br>' ,
-            timeline: [fixation_cards, exp_cards1, exp_choice1, exp_reward1, fixation_cards, exp_cards2, exp_choice2, exp_reward2],
+            timeline: [fixation_cards, exp_cards, exp_choice, exp_reward],
             repetitions: 50 // 10sec per trial - 50 trials per block.
         }
         
