@@ -144,7 +144,7 @@
             + " 3. <b>The chance that each card will give you money has nothing to do with the other cards - </b> you can't learn about one card from the money rewards you got for the other.</p>",
 
             "After completing the quiz you will start the real game which consists of 4 test blocks.<br><br>"
-            + "Please note that you will play at <b> low stakes (X1) </b> in some blocks and <b> high stakes (X5) </b> in others. <br> This means you will earn <u> 5 times more for each correct answer in the high stakes blocks.</u><br>",],
+            + "Please note that you will play at <b> low stakes (1X) </b> in some blocks and <b> high stakes (5X) </b> in others. <br> This means you will earn <u> 5 times more for each correct answer in the high stakes blocks.</u><br>",],
             show_clickable_nav: true
         };
         
@@ -281,9 +281,9 @@
         //returns a string that indicates the stakes for the current block
         function curr_block_stakes(block_number){
             if (blocks_stakes[block_number] == 1){
-                return ["low stakes (X1)", "0.5 cents"]
+                return ["low stakes (1X)", "0.5 cents"]
             }
-            return ["high stakes (X5)", "2.5 cents"]
+            return ["high stakes (5X)", "2.5 cents"]
         }
 
         /*This function downloads the data */
