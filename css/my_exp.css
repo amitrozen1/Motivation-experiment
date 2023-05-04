@@ -68,21 +68,32 @@
         --left_reward: 0px;
     }
 
+    .myprompt {
+        position: absolute;
+        top: 10%;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
     .fixation {
         /* plus fixation will be in the middle of the screen*/
-        display: block;
-        margin-left: auto;
-        margin-right: auto;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
         font-size: 15.8px;
     }
 
     .reward {
-
+        position: fixed;
         display: block;
         margin-left: auto;
         margin-right: auto;
         height: 100px;
         width: 100px;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
     }
 
     .group {
@@ -110,7 +121,6 @@
         right: var(--right_card);
         top: var(--top_card);
     }
-
 
 
     /* we have one image in every quadrant pixels locations are from Balaban et al., 2019 */
