@@ -26,13 +26,6 @@
 
         var jsPsych = initJsPsych({
             on_finish: function () {
-                // This all part is not used in this experiment (showing participants their bonus and capacity)
-                /*calculate accuracy in squares part of cards game */
-                var correct_test_squares = jsPsych.data.get().filter({ phase: 'exp', trial_name: 'test_cards' }).select('is_correct').sum()
-                var total_test_squares = jsPsych.data.get().filter({ phase: 'exp', trial_name: 'test_cards' }).select('is_correct').count()
-                var test_squares_cards_accuracy = correct_test_squares / total_test_squares;
-                var test_squares_cards_accuracy = test_squares_cards_accuracy.toFixed(2)
-                localStorage.accuracy = test_squares_cards_accuracy; //accuracy to show
                 /*calculate bonus */
                 var number_of_reward1 = jsPsych.data.get().filter({ phase: 'exp', trial_name: 'reward1' }).select('reward').sum()
                 var number_of_reward2 = jsPsych.data.get().filter({ phase: 'exp', trial_name: 'reward2' }).select('reward').sum()
@@ -84,16 +77,13 @@
         if (localStorage.prolific != undefined) { //are we debugging?
             var sign = localStorage.prolific[localStorage.prolific.length - 1];
             if (['0', '1', '2', '3', '4', 'a', 'b', 'c'].includes(sign)) {
-                mapping = 'sk'
                 blocks_stakes = [1,5,1,5]
             }
             else {
-                mapping = 'ks'
                 blocks_stakes = [5,1,5,1]
             }
         }
         else {
-            var mapping = 'sk'
             var blocks_stakes = [1,5,1,5]
         }
         var practice_deck_images = ['images/practice/p1.jpg', 'images/practice/p2.jpg', 'images/practice/p3.jpg', 'images/practice/p4.jpg']
@@ -503,7 +493,7 @@
             choices: "NO_KEYS",
             trial_duration: 750,
             data: {
-                phase: 'exp', trial_name: 'reward2', trial_num: function () { return current_cards_exp_trial }, block: function () { return block }, block_stakes : function () {return blocks_stakes[block]}, mapping: mapping,},
+                phase: 'exp', trial_name: 'reward2', trial_num: function () { return current_cards_exp_trial }, block: function () { return block }, block_stakes : function () {return blocks_stakes[block]},},
                 
             on_finish: function (data) {
                 current_cards_exp_trial += 1;
@@ -569,25 +559,25 @@
         }
 
         var test_procedure_cards_block1 = {
-            prompt: '<div style="position: absolute; text-align: center; left: 0; right: 0; top: 5%;"><h2>' +curr_block_stakes(0)[0] + '</h2></div><br><br><br>' ,
+            prompt: '<div class="myprompt" ><h2>' +curr_block_stakes(0)[0] + '</h2></div><br><br><br>' ,
             timeline: [fixation_cards, exp_cards, exp_choice, exp_reward],
             repetitions: 5 // 10sec per trial - 50 trials per block.
         }
 
         var test_procedure_cards_block2 = {
-            prompt: '<div style="position: absolute; text-align: center; left: 0; right: 0; top: 5%;"><h2>' +curr_block_stakes(1)[0] + '</h2></div><br><br><br>' ,
+            prompt: '<div class="myprompt" ><h2>' +curr_block_stakes(1)[0] + '</h2></div><br><br><br>' ,
             timeline: [fixation_cards, exp_cards, exp_choice, exp_reward],
             repetitions: 5 // 10sec per trial - 50 trials per block.
         }
 
         var test_procedure_cards_block3 = {
-            prompt: '<div style="position: absolute; text-align: center; left: 0; right: 0; top: 5%;"><h2>' +curr_block_stakes(2)[0] + '</h2></div><br><br><br>' ,
+            prompt: '<div class="myprompt" ><h2>' +curr_block_stakes(2)[0] + '</h2></div><br><br><br>' ,
             timeline: [fixation_cards, exp_cards, exp_choice, exp_reward],
             repetitions: 5 // 10sec per trial - 50 trials per block.
         }
 
         var test_procedure_cards_block4 = {
-            prompt: '<div style="position: absolute; text-align: center; left: 0; right: 0; top: 5%;"><h2>' +curr_block_stakes(3)[0] + '</h2></div><br><br><br>' ,
+            prompt: '<div class="myprompt" ><h2>' +curr_block_stakes(3)[0] + '</h2></div><br><br><br>' ,
             timeline: [fixation_cards, exp_cards, exp_choice, exp_reward],
             repetitions: 5 // 10sec per trial - 50 trials per block.
         }
