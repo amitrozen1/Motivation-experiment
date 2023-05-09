@@ -86,6 +86,7 @@
         else {
             var blocks_stakes = [1,5,1,5]
         }
+        var instructions_images = ['images/example_deck.jpg','images/example_new.jpg', 'images/reward_example_new.jpg']
         var practice_deck_images = ['images/practice/p1.jpg', 'images/practice/p2.jpg', 'images/practice/p3.jpg', 'images/practice/p4.jpg']
         var test_deck_images = ['images/test/f1.jpg', 'images/test/f2.jpg', 'images/test/f3.jpg', 'images/test/f4.jpg', 'images/test/f5.jpg', 'images/test/f6.jpg',
         'images/test/f7.jpg', 'images/test/f8.jpg', 'images/test/f9.jpg', 'images/test/f10.jpg', 'images/test/f11.jpg', 'images/test/f12.jpg', 'images/test/f13.jpg',
@@ -94,7 +95,7 @@
         var fixation = '<div class="fixation">+</div>'
         var preload = {
             type: jsPsychPreload,
-            images: practice_deck_images, test_deck_images, reward_images
+            images: practice_deck_images, test_deck_images, reward_images, instructions_images, 
         };
 
         /*---------------------------------------------------- 
@@ -117,24 +118,27 @@
             + "<p style='text-align:left'>At the end of the instructions, <b>we will ask you to complete a short quiz about them</b>, to make sure everything is well understood.</p>",
 
             "<p style='text-align:left'> Below is an example of a card-deck of four cards, very much like the cards in the game to follow. </p>" +
-            "<img class='group' src='images/example_deck.jpg' >",
+            "<img class='group' src= " + instructions_images[0] + ">",
 
-            "<p> On each step, only two cards from the 4-card deck will be offered (as shown in the example below).<br>You will be able to select the <b>left card by pressing 's'</b> and the <b>right card by pressing 'k'</b> on your keyboard."
-            + " <br><br><u>Please do your best to respond as fast and accurate as you can.</u><br><br>"
-            + "<img class='example' src='images/example_new.jpg' >",
+            "<p> On each step, only two cards from the 4-card deck will be offered (as shown in the example below).<br>You will be able to select the <b>left card by pressing 's'</b> and the <b>right card by pressing 'k'</b> on your keyboard.<br><br>"
+            + "<img class='example' src= " + instructions_images[1] + ">",
 
             "<p style='text-align:left'>After selecting the card, you will see an outcome in the middle of the screen, as shown below.<br><br>"
             + "<b>Winning very much depends on the card you chose - some cards are better than others in their deck.</b><br>"
             + "Your task is to find out which card is the best in each deck at any time and choose it.<br><br> <b> Please note that the winning chances of the cards are independent</b>.<br> Learning about one card does not tell you anything about the other cards.</p>"
-            + "<br> <img class='example' src='images/reward_example_new.jpg'>",
+            + "<br> <img class='example' src= " + instructions_images[2] + ">",
 
+            "<p style='text-align:left'><br><br>"
+            + "Please note that there are 3 different gain conditions: <b>zero gains (0X)</b>, <b>low gains (1X)</b> and <b>high gains (5X)</b>."
+            + "<br><br>This means that the amount you earn for each correct answer will vary depending on the gain condition of that part. For instance, in a high gain part you will earn five times more for each correct answer than in a low gain part.</p><br>",
+            
+            "<p style='text-align:left'>After completing the quiz, you will start the real game, which consists of 3 gameplay parts. The gain condition for each game part will be chosen randomly, so you may not come across all the different gain conditions during the game.</p>",
+            
             "<p style='text-align:left'><u>Three important things to remember:</u><br>"
-            + "1. <b>How good a card is can change along with the game</b> - somewhat like the value of market products that sometimes worth more and sometimes less."
-            + "<br><br>2.<b> Only the cards are related to your chances of winning - </b> the location of the card and the response key you used to select it does not influence the chances of winning a coin.<br><br>"
-            + " 3. <b>The chance that each card will give you money has nothing to do with the other cards - </b> you can't learn about one card from the money rewards you got for the other.</p>",
-
-            "After completing the quiz you will start the real game which consists of 4 test blocks.<br><br>"
-            + "Please note that you will play at <b> low gains (1X) </b> in some blocks and <b> high gains (5X) </b> in others. <br> This means you will earn <u> 5 times more for each correct answer in the high gains blocks.</u><br>",],
+                + "1. <b>How good a card is can change along with the game</b> - somewhat like the value of market products that sometimes worth more and sometimes less."
+                + "<br><br>2.<b> Only the cards are related to your chances of winning - </b> the location of the card and the response key you used to select it does not influence the chances of winning a coin.<br><br>"
+                + " 3. <b>The chance that each card will give you money has nothing to do with the other cards - </b> you can't learn about one card from the money rewards you got for the other."
+                + " <br><br><u>Please do your best to respond as fast and accurate as you can.</u><br><br></p>",],
             show_clickable_nav: true
         };
         
@@ -160,7 +164,7 @@
                 { prompt: "What is the size of a card deck?", name: 'deck_size', correct: '4', options: Q1_2_options, required: true },
                 { prompt: "How many cards are presented on each step?", name: 'cards_step', correct: '2', options: Q1_2_options, required: true },
                 { prompt: "How do you choose a card?", name: 'choose_card', correct: 'Press the ‘S’ or ‘K’ key with your LEFT or RIGHT hand.', options: Q3_options, required: true },
-                { prompt: "I will receive the same amount of money for each correct response in every block in the game", name: 'block_stakes', correct: "False", options: Q4_options, required: true },
+                { prompt: "I will receive the same amount of money for each correct response in every part of the game", name: 'block_stakes', correct: "False", options: Q4_options, required: true },
                 { prompt: "Some cards are better than others.", name: 'better_cards', correct: 'True', options: Q5_6_options, required: true },
                 { prompt: "How ‘good’ or ‘bad’ a card is will change along the game.", name: 'value_change', correct: 'True', options: Q5_6_options, required: true },
                 { prompt: "What is the goal in the game?", name: 'game_goal', correct: "The goal is to learn which card is better", options: Q7_options, required: true },
@@ -305,6 +309,7 @@
         var right_card;
         var selected;
         var reward;
+        var rewards_for_block = 0;
 
         /*---------------------------------------------------- 
         Start practice
@@ -443,7 +448,7 @@
             stimulus: function () {
                 var stakes_data = curr_block_stakes(block)
                 return '<p><b><u>Test block ' + (block + 1) + ' out of ' + (blocks) + '</u></b></p>' + '<p style="text-align: left"> You will now start a test block. Below are the four cards that can appear in this round.</p>'
-                    + '<p style="text-align: left"> This is a <b><u>' + (stakes_data[0])+ '</u></b> block, which means you will earn ' + (stakes_data[1]) + ' for every correct response.</p>'
+                    + '<p style="text-align: left"> This is a <b><u>' + (stakes_data[0])+ '</u></b> gaame part, which means you will earn ' + (stakes_data[1]) + ' for every correct response.</p>'
                     + '<p style="text-align: left">Use the LEFT or RIGHT response keys (‘s’ or ‘k’, in correspondence) to make your selection. <br> Please do your best to win as many coins as possible!<br> </p>'
                     + '<p style="text-align: left">Remember that: <br> 1) How ‘good’ each card is can change along the round <br> 2) Only the cards (not the response key that was used to select them) predict an outcome <br> 3) The chance that each card will give you money has nothing to do with the other cards </p>'
                     + '<p><b>Press SPACE to start</b></p>'
@@ -497,6 +502,7 @@
                 
             on_finish: function (data) {
                 current_cards_exp_trial += 1;
+                rewards_for_block += reward;
 
                 data.reward = reward;
                 data.key_selected = selected
@@ -523,8 +529,9 @@
             type: jsPsychHtmlKeyboardResponse,
             stimulus: function () {
                 finish_block_string = '<p>Good job!</p>' + '<p style="text-align: left"><br> Test block ' + (block + 1) + ' out of ' + (blocks) + ' is over.'
+                finish_block_string += '<br>In this part of the game, you earned ' + rewards_for_block + ' coins, which translate to ' + rewards_for_block * blocks_stakes[block] + ' coins under the gains condition.</p>'
                 if (block != 3) {
-                    finish_block_string += ' You can stretch a little and take a short break while sitting in front of the screen, if needed.</p><p> <br><br><br><b>Press SPACE to continue</b>  </p>'
+                    finish_block_string += '<p style="text-align: left"> You can stretch a little and take a short break while sitting in front of the screen, if needed.</p><p> <br><br><br><b>Press SPACE to continue</b>  </p>'
                 }
                 else {
                     finish_block_string += ' We will now continue to answer some questions.</p><p> <br><br><br><b>Press SPACE to continue</b>  </p>'
@@ -536,6 +543,7 @@
             on_finish: function () {
                 block += 1;
                 current_cards_exp_trial = 0;
+                rewards_for_block = 0;
             }
         }
 
@@ -559,7 +567,7 @@
         }
 
         var test_procedure_cards_block1 = {
-            prompt: '<div class="myprompt" ><h2>' +curr_block_stakes(0)[0] + '</h2></div><br><br><br>' ,
+            prompt: '<div class="myprompt" ><h2>' + curr_block_stakes(0)[0] + '</h2></div><br><br><br>' ,
             timeline: [fixation_cards, exp_cards, exp_choice, exp_reward],
             repetitions: 5 // 10sec per trial - 50 trials per block.
         }
