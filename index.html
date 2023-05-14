@@ -235,10 +235,15 @@
                 selected = 1
                 card_to_show = "<img class='card_right' src='" + right_card + "'>"
             }
-            else {
+            else if (last_choice == null) {
                 selected = null
                 reward = 0
                 return '<div style="font-size:40px;">Please respond faster!</div>'
+            }
+            else {
+                selected = -1
+                reward = 0
+                return '<div style="font-size:40px;">wrong key!</div><br><br><div style="font-size:20px;">Please use the ‘K’ and ‘S’ keys to select the left or right card respectively. </div>'
             }
             return card_to_show + fixation
         }
@@ -253,8 +258,11 @@
             else if (key_selected == 1) {
                 card_to_show = "<img class='card_right' src='" + right_card + "'>"
             }
-            else {
+            else if (key_selected == null) {
                 return '<div style="font-size:40px;">Please respond faster!</div>'
+            }
+            else {
+                return '<div style="font-size:40px;">wrong key!</div><br><br><div style="font-size:20px;">Please use the ‘K’ and ‘S’ keys to select the left or right card respectively. </div>'
             }
             card_selected = jsPsych.data.getLastTrialData().values()[0].card_selected //determines the identity of the chosen card
             prob_reward = curr_block_probs[card_selected]; //use the FB as reward func to get the propability for reward
@@ -336,7 +344,7 @@
             stimulus: function () {
                 return draw_show_cards(practice_deck_images)
             },
-            choices: ['s', 'k'],
+            choices: "ALL_KEYS",
             trial_duration: 6000,
             data: { phase: 'practice', trial_name: 'cards1', trial_num: function () { return current_cards_practice_trial } },
 
@@ -384,7 +392,7 @@
                 right_with_tag = "<img class='card_right' src='" + right_card + "'>"
                 return left_with_tag + right_with_tag + fixation;
             },
-            choices: ['s', 'k'],
+            choices: "ALL_KEYS",
             trial_duration: 6000,
             data: { phase: 'practice', trial_name: 'cards2', trial_num: function () { return current_cards_practice_trial } }
         }
@@ -393,7 +401,7 @@
             type: jsPsychHtmlKeyboardResponse,
             stimulus: show_choice,
             choices: "NO_KEYS",
-            trial_duration: 500,
+            trial_duration: 1000,
             data: { phase: 'practice', trial_name: 'choice2', trial_num: function () { return current_cards_practice_trial } },
             on_finish: function (data) {
                 data.key_selected = selected
@@ -468,7 +476,7 @@
             type: jsPsychHtmlKeyboardResponse,
             stimulus: show_choice,
             choices: "NO_KEYS",
-            trial_duration: 500,
+            trial_duration: 1000,
             data: { phase: 'exp', trial_name: 'choice', trial_num: function () { return current_cards_exp_trial }, block_type: function () {return blocks_stakes[block]} },
             on_finish: function (data) {
                 data.key_selected = selected
