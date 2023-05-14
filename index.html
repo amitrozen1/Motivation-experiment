@@ -26,12 +26,6 @@
 
         var jsPsych = initJsPsych({
             on_finish: function () {
-                /*calculate bonus */
-                var number_of_reward1 = jsPsych.data.get().filter({ phase: 'exp', trial_name: 'reward1' }).select('reward').sum()
-                var number_of_reward2 = jsPsych.data.get().filter({ phase: 'exp', trial_name: 'reward2' }).select('reward').sum()
-                var bonus = 0.003 * (number_of_reward1 + number_of_reward2)
-                var bonus_string = bonus.toFixed(2)
-                localStorage.bonus = bonus_string; //bonus to show
                 /*get data */
                 processed_data = jsPsych.data.get().json()
                 download_csv(jsPsych.data.get().csv())
@@ -54,7 +48,6 @@
         /*this defines the css properties according to the window_screen_size*/
         var root = document.documentElement;
         var vis_angle_px = 105
-        var square_width = 51.4
 
         //---------------------------------------------------------------------------------------------
         root.style.setProperty('--left_card', window.screen.width / 2 - 2 * vis_angle_px + "px");
