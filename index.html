@@ -69,6 +69,7 @@
         /*full screen */
         var enter_fullscreen = {
             type: jsPsychFullscreen,
+            message: '<p>This experiment will be in fullscreen mode. <br> <b>Please make sure your browser is on 100% zoom, and your keyboard is on the English language.</b></p>',
             fullscreen_mode: true
         }
         /*---------------------------------------------------- 
@@ -152,10 +153,11 @@
         var Q1_2_options = ["2", "4", "6"];
         var Q3_options = ["Click on it", "Press the LEFT or RIGHT arrow keys", "Press the ‘S’ or ‘K’ key with your LEFT or RIGHT hand."];
         var Q4_options = ["True", "False"];
-        var Q5_6_options = ["True", "False"];
-        var Q7_options = ["The goal is to learn which card is better", "The goal is to answer the questions as quickly as possible"]
+        var Q5_6_7_options = ["True", "False"];
+        var Q8_options = ["The goal is to learn which card is better", "The goal is to answer the questions as quickly as possible"]
         var Q8_options = ["True", "False"];
-        var Q9_options = ["True - the response keys are related to the winning chances", "False - you won't win more or less using RIGHT or LEFT response keys. Only the cards are related to your chance of winning."];
+        var Q9_options = ["True", "False- what I learn on one card tells me nothing about the others, only by choosing a card I can learn if its good or not"];
+        var Q10_options = ["True - the response keys are related to the winning chances", "False - you won't win more or less using RIGHT or LEFT response keys. Only the cards are related to your chance of winning."];
 
         var instructions_test = {
             type: jsPsychSurveyMultiChoice,
@@ -165,10 +167,10 @@
                 { prompt: "How do you choose a card?", name: 'choose_card', correct: 'Press the ‘S’ or ‘K’ key with your LEFT or RIGHT hand.', options: Q3_options, required: true },
                 { prompt: "I will receive the same amount of money for each correct response in every part of the game.", name: 'block_stakes', correct: "False", options: Q4_options, required: true },
                 { prompt: "Some cards are better than others.", name: 'better_cards', correct: 'True', options: Q5_6_options, required: true },
-                { prompt: "How ‘good’ or ‘bad’ a card is will change along the game.", name: 'value_change', correct: 'True', options: Q5_6_options, required: true },
-                { prompt: "What is the goal in the game?", name: 'game_goal', correct: "The goal is to learn which card is better", options: Q7_options, required: true },
-                { prompt: "If one card leads you to more money, it means the other cards will probably lead you to less money.", name: 'value_independence', correct: 'False', options: Q8_options, required: true },
-                { prompt: "If you use the RIGHT and not the LEFT response keys, you might win more.", name: 'location_value', correct: "False - you won't win more or less using RIGHT or LEFT response keys. Only the cards are related to your chance of winning.", options: Q9_options, required: true },
+                { prompt: "How ‘good’ or ‘bad’ a card is will change along the game.", name: 'value_change', correct: 'True', options: Q5_6_7_options, required: true },
+                { prompt: "What is the goal in the game?", name: 'game_goal', correct: "The goal is to learn which card is better", options: Q8_options, required: true },
+                { prompt: "If one card leads you to more money, it means the other cards will probably lead you to less money.", name: 'value_independence', correct: 'False', options: Q9_options, required: true },
+                { prompt: "If you use the RIGHT and not the LEFT response keys, you might win more.", name: 'location_value', correct: "False - you won't win more or less using RIGHT or LEFT response keys. Only the cards are related to your chance of winning.", options: Q10_options, required: true },
             ],
         };
 
@@ -333,7 +335,7 @@
             },
             choices: ['s', 'k'],
             trial_duration: 6000,
-            data: { phase: 'practice', trial_name: 'cards1', trial_num: function () { return current_cards_practice_trial } },
+            data: { phase: 'practice', trial_name: 'cards1', trial_num: function () { return current_cards_practice_trial }, block_type: },
 
         }
         
@@ -463,7 +465,7 @@
             },
             choices: ['s', 'k'],
             trial_duration: 6000,
-            data: { phase: 'exp', trial_name: 'cards1', trial_num: function () { return current_cards_exp_trial } },
+            data: { phase: 'exp', trial_name: 'cards1', trial_num: function () { return current_cards_exp_trial }, block_type: blocks_stakes[block_number] },
 
         }
 
@@ -472,7 +474,7 @@
             stimulus: show_choice,
             choices: "NO_KEYS",
             trial_duration: 500,
-            data: { phase: 'exp', trial_name: 'choice1', trial_num: function () { return current_cards_exp_trial } },
+            data: { phase: 'exp', trial_name: 'choice1', trial_num: function () { return current_cards_exp_trial }, block_type: blocks_stakes[block_number] },
             on_finish: function (data) {
                 data.key_selected = selected
                 if (selected == 0) {
@@ -492,7 +494,7 @@
             choices: "NO_KEYS",
             trial_duration: 750,
             data: {
-                phase: 'exp', trial_name: 'reward2', trial_num: function () { return current_cards_exp_trial }, block: function () { return block }, block_stakes : function () {return blocks_stakes[block]},},
+                phase: 'exp', trial_name: 'reward2', trial_num: function () { return current_cards_exp_trial }, block: function () { return block }, , block_type: blocks_stakes[block_number]},
                 
             on_finish: function (data) {
                 current_cards_exp_trial += 1;
