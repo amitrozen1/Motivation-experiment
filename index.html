@@ -439,7 +439,7 @@
             stimulus: function () {
                 var stakes_data = curr_block_stakes(block)
                 return '<p><b><u>Test block ' + (block + 1) + ' out of ' + (blocks) + '</u></b></p>' + '<p style="text-align: left"> You will now start a test block. Below are the four cards that can appear in this round.</p>'
-                    + '<p style="text-align: left"> This is a <b><u>' + (stakes_data[0])+ '</u></b> gaame part, which means you will earn ' + (stakes_data[1]) + ' for every correct response.</p>'
+                    + '<p style="text-align: left"> This is a <b><u>' + (stakes_data[0])+ '</u></b> game part, which means you will earn ' + (stakes_data[1]) + ' for every correct response.</p>'
                     + '<p style="text-align: left">Use the LEFT or RIGHT response keys (‘s’ or ‘k’, in correspondence) to make your selection. <br> Please do your best to win as many coins as possible!<br> </p>'
                     + '<p style="text-align: left">Remember that: <br> 1) How ‘good’ each card is can change along the round <br> 2) Only the cards (not the response key that was used to select them) predict an outcome <br> 3) The chance that each card will give you money has nothing to do with the other cards </p>'
                     + '<p><b>Press SPACE to start</b></p>'
@@ -458,9 +458,9 @@
             stimulus: function () {
                 return  draw_show_cards(images_for_block_start())
             },
-            choices: ['s', 'k'],
+            choices: "ALL_KEYS",
             trial_duration: 6000,
-            data: { phase: 'exp', trial_name: 'cards1', trial_num: function () { return current_cards_exp_trial }, block_type: blocks_stakes[block] },
+            data: { phase: 'exp', trial_name: 'cards', trial_num: function () { return current_cards_exp_trial }, block_type: function () {return blocks_stakes[block]} },
 
         }
 
@@ -469,7 +469,7 @@
             stimulus: show_choice,
             choices: "NO_KEYS",
             trial_duration: 500,
-            data: { phase: 'exp', trial_name: 'choice1', trial_num: function () { return current_cards_exp_trial }, block_type: blocks_stakes[block] },
+            data: { phase: 'exp', trial_name: 'choice', trial_num: function () { return current_cards_exp_trial }, block_type: function () {return blocks_stakes[block]} },
             on_finish: function (data) {
                 data.key_selected = selected
                 if (selected == 0) {
@@ -489,7 +489,7 @@
             choices: "NO_KEYS",
             trial_duration: 750,
             data: {
-                phase: 'exp', trial_name: 'reward2', trial_num: function () { return current_cards_exp_trial }, block: function () { return block }, block_type: blocks_stakes[block]},
+                phase: 'exp', trial_name: 'reward', trial_num: function () { return current_cards_exp_trial }, block: function () { return block }, block_type: function () {return blocks_stakes[block]}, coins: function () {return blocks_stakes[block] * reward} },
                 
             on_finish: function (data) {
                 current_cards_exp_trial += 1;
@@ -550,19 +550,19 @@
         var test_procedure_block1 = {
             prompt: '<div class="myprompt" ><h2>' + curr_block_stakes(0)[0] + '</h2></div><br><br><br>' ,
             timeline: [fixation_cards, exp_cards, exp_choice, exp_reward],
-            repetitions: 5 // 10sec per trial - 50 trials per block.
+            repetitions: 3 // 10sec per trial - 50 trials per block.
         }
 
         var test_procedure_block2 = {
             prompt: '<div class="myprompt" ><h2>' +curr_block_stakes(1)[0] + '</h2></div><br><br><br>' ,
             timeline: [fixation_cards, exp_cards, exp_choice, exp_reward],
-            repetitions: 5 // 10sec per trial - 50 trials per block.
+            repetitions: 3 // 10sec per trial - 50 trials per block.
         }
 
         var test_procedure_block3 = {
             prompt: '<div class="myprompt" ><h2>' +curr_block_stakes(2)[0] + '</h2></div><br><br><br>' ,
             timeline: [fixation_cards, exp_cards, exp_choice, exp_reward],
-            repetitions: 5 // 10sec per trial - 50 trials per block.
+            repetitions: 3 // 10sec per trial - 50 trials per block.
         }
         
         var test_blocks = {
