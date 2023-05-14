@@ -114,7 +114,7 @@
             + "Feel free to go back and forth between the screens.<br><br>"
             + "At the end of the instructions, <b>we will ask you to complete a short quiz about them</b>, to make sure everything is well understood.</p>",
 
-            "<p style='text-align:left'> Below is an example of a card-deck of four cards, very much like the cards in the game to follow. </p>" +
+            "<p style='text-align:left'> Below is an example of a four-card deck, very much like the cards in the game to follow. </p>" +
             "<img class='group' src= " + instructions_images[0] + ">",
 
             "<p style='text-align:left'> At each step, only two cards from the 4- card deck will be offered for selection (as shown in the example below)."
@@ -152,7 +152,7 @@
         var Q3_options = ["Click on it", "Press the LEFT or RIGHT arrow keys", "Press the ‘S’ or ‘K’ key with your LEFT or RIGHT hand."];
         var Q4_5_6_7_options = ["True", "False"];
         var Q8_options = ["The goal is to learn which card is better", "The goal is to answer the questions as quickly as possible"]
-        var Q9_options = ["True", "False- what I learn on one card tells me nothing about the others, only by choosing a card I can learn if its good or not"];
+        var Q9_options = ["True", "False. What I learn about one card does not tell me anything about the others. I can only learn whether a card is good or not by choosing it."];
         var Q10_options = ["True - the response keys are related to the winning chances", "False - you won't win more or less using RIGHT or LEFT response keys. Only the cards are related to your chance of winning."];
 
         var instructions_test = {
@@ -165,7 +165,7 @@
                 { prompt: "Some cards are better than others.", name: 'better_cards', correct: 'True', options: Q4_5_6_7_options, required: true },
                 { prompt: "How ‘good’ or ‘bad’ a card is will change along the game.", name: 'value_change', correct: 'True', options: Q4_5_6_7_options, required: true },
                 { prompt: "What is the goal in the game?", name: 'game_goal', correct: "The goal is to learn which card is better", options: Q8_options, required: true },
-                { prompt: "If one card leads you to more money, it means the other cards will probably lead you to less money.", name: 'value_independence', correct: "False- what I learn on one card tells me nothing about the others, only by choosing a card I can learn if its good or not", options: Q9_options, required: true },
+                { prompt: "If one card leads to more money, it is likely that the other cards will lead to less money.", name: 'value_independence', correct: "False. What I learn about one card does not tell me anything about the others. I can only learn whether a card is good or not by choosing it.", options: Q9_options, required: true },
                 { prompt: "If you use the RIGHT and not the LEFT response keys, you might win more.", name: 'location_value', correct: "False - you won't win more or less using RIGHT or LEFT response keys. Only the cards are related to your chance of winning.", options: Q10_options, required: true },
             ],
         };
