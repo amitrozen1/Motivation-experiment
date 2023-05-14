@@ -157,10 +157,8 @@
         }
         var Q1_2_options = ["2", "4", "6"];
         var Q3_options = ["Click on it", "Press the LEFT or RIGHT arrow keys", "Press the ‘S’ or ‘K’ key with your LEFT or RIGHT hand."];
-        var Q4_options = ["True", "False"];
-        var Q5_6_7_options = ["True", "False"];
+        var Q4_5_6_7_options = ["True", "False"];
         var Q8_options = ["The goal is to learn which card is better", "The goal is to answer the questions as quickly as possible"]
-        var Q8_options = ["True", "False"];
         var Q9_options = ["True", "False- what I learn on one card tells me nothing about the others, only by choosing a card I can learn if its good or not"];
         var Q10_options = ["True - the response keys are related to the winning chances", "False - you won't win more or less using RIGHT or LEFT response keys. Only the cards are related to your chance of winning."];
 
@@ -170,11 +168,11 @@
                 { prompt: "What is the size of a card deck?", name: 'deck_size', correct: '4', options: Q1_2_options, required: true },
                 { prompt: "How many cards are presented on each step?", name: 'cards_step', correct: '2', options: Q1_2_options, required: true },
                 { prompt: "How do you choose a card?", name: 'choose_card', correct: 'Press the ‘S’ or ‘K’ key with your LEFT or RIGHT hand.', options: Q3_options, required: true },
-                { prompt: "I will receive the same amount of money for each correct response in every part of the game.", name: 'block_stakes', correct: "False", options: Q4_options, required: true },
-                { prompt: "Some cards are better than others.", name: 'better_cards', correct: 'True', options: Q5_6_7_options, required: true },
-                { prompt: "How ‘good’ or ‘bad’ a card is will change along the game.", name: 'value_change', correct: 'True', options: Q5_6_7_options, required: true },
+                { prompt: "I will receive the same amount of money for each correct response in every part of the game.", name: 'block_stakes', correct: "False", options: Q4_5_6_7_options, required: true },
+                { prompt: "Some cards are better than others.", name: 'better_cards', correct: 'True', options: Q4_5_6_7_options, required: true },
+                { prompt: "How ‘good’ or ‘bad’ a card is will change along the game.", name: 'value_change', correct: 'True', options: Q4_5_6_7_options, required: true },
                 { prompt: "What is the goal in the game?", name: 'game_goal', correct: "The goal is to learn which card is better", options: Q8_options, required: true },
-                { prompt: "If one card leads you to more money, it means the other cards will probably lead you to less money.", name: 'value_independence', correct: 'False', options: Q9_options, required: true },
+                { prompt: "If one card leads you to more money, it means the other cards will probably lead you to less money.", name: 'value_independence', correct: "False- what I learn on one card tells me nothing about the others, only by choosing a card I can learn if its good or not", options: Q9_options, required: true },
                 { prompt: "If you use the RIGHT and not the LEFT response keys, you might win more.", name: 'location_value', correct: "False - you won't win more or less using RIGHT or LEFT response keys. Only the cards are related to your chance of winning.", options: Q10_options, required: true },
             ],
         };
@@ -390,6 +388,7 @@
             trial_duration: 6000,
             data: { phase: 'practice', trial_name: 'cards2', trial_num: function () { return current_cards_practice_trial } }
         }
+
         var practice_choice2 = {
             type: jsPsychHtmlKeyboardResponse,
             stimulus: show_choice,
@@ -420,15 +419,6 @@
                 current_cards_practice_trial += 1;
                 phase = jsPsych.data.getLastTrialData().values()[0].phase
                 current_cards_practice_trial += 1;
-                var correct = false;
-                if (data.correct_response == data.response) {
-                    correct = true;
-                }
-
-                else if (data.response == null) {
-                    correct = null;
-                }
-                data.is_correct = correct;
             }
         }
 
@@ -513,18 +503,8 @@
                 else if (selected == 1) {
                     data.card_selected = images_for_block_start().indexOf(right_card)
                 }
-
-                var correct = false;
-                if (data.correct_response == data.key_press) {
-                    correct = true;
-                }
-                else if (data.key_press == null) {
-                    correct = null;
-                }
-                data.is_correct = correct;
             }
         }
-        
 
         var finish_block = {
             type: jsPsychHtmlKeyboardResponse,
@@ -586,7 +566,7 @@
         }
         
         var test_blocks = {
-            timeline: [start_block, test_procedure_block1, finish_block, start_block, test_procedure_block2, finish_block, start_block, test_procedure_block3, finish_block, start_block, finish_block],
+            timeline: [start_block, test_procedure_block1, finish_block, start_block, test_procedure_block2, finish_block, start_block, test_procedure_block3, finish_block],
         };
 
         var full_procedure_cards = {
