@@ -567,26 +567,26 @@
             }
         }
 
-        var test_procedure_cards_block1 = {
+        var test_procedure_block1 = {
             prompt: '<div class="myprompt" ><h2>' + curr_block_stakes(0)[0] + '</h2></div><br><br><br>' ,
             timeline: [fixation_cards, exp_cards, exp_choice, exp_reward],
             repetitions: 5 // 10sec per trial - 50 trials per block.
         }
 
-        var test_procedure_cards_block2 = {
+        var test_procedure_block2 = {
             prompt: '<div class="myprompt" ><h2>' +curr_block_stakes(1)[0] + '</h2></div><br><br><br>' ,
             timeline: [fixation_cards, exp_cards, exp_choice, exp_reward],
             repetitions: 5 // 10sec per trial - 50 trials per block.
         }
 
-        var test_procedure_cards_block3 = {
+        var test_procedure_block3 = {
             prompt: '<div class="myprompt" ><h2>' +curr_block_stakes(2)[0] + '</h2></div><br><br><br>' ,
             timeline: [fixation_cards, exp_cards, exp_choice, exp_reward],
             repetitions: 5 // 10sec per trial - 50 trials per block.
         }
         
         var test_blocks = {
-            timeline: [start_block, test_procedure_cards_block1, finish_block, start_block, test_procedure_cards_block2, finish_block, start_block, test_procedure_cards_block3, finish_block, start_block, finish_block],
+            timeline: [start_block, test_procedure_block1, finish_block, start_block, test_procedure_block2, finish_block, start_block, test_procedure_block3, finish_block, start_block, finish_block],
         };
 
         var full_procedure_cards = {
