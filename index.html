@@ -155,7 +155,7 @@
             stimulus: "<p> <br><br> You will now move on to a quick quiz to make sure you understood the instructions. If you will have a mistake you will need to go again through the instructions. <br><br> <b> Press any key to continue</b></p>"
         }
         var Q1_2_options = ["2", "4", "6"];
-        var Q3_options = ["Click on it", "Press the LEFT or RIGHT arrow keys", "Press the ‘S’ or ‘K’ key with your LEFT or RIGHT hand."];
+        var Q3_options = ["Click on it", "Press the LEFT or RIGHT arrow keys", "Press the `S` or `K` key with your LEFT or RIGHT hand."];
         var Q4_5_6_7_options = ["True", "False"];
         var Q8_options = ["The goal is to learn which card is better", "The goal is to answer the questions as quickly as possible"]
         var Q9_options = ["True", "False. What I learn about one card does not tell me anything about the others. I can only learn whether a card is good or not by choosing it."];
@@ -166,11 +166,11 @@
             questions: [
                 { prompt: "What is the size of a card deck?", name: 'deck_size', correct: '4', options: Q1_2_options, required: true },
                 { prompt: "How many cards are presented on each step?", name: 'cards_step', correct: '2', options: Q1_2_options, required: true },
-                { prompt: "How do you choose a card?", name: 'choose_card', correct: 'Press the ‘S’ or ‘K’ key with your LEFT or RIGHT hand.', options: Q3_options, required: true },
+                { prompt: "How do you choose a card?", name: 'choose_card', correct: 'Press the `S` or `K` key with your LEFT or RIGHT hand.', options: Q3_options, required: true },
                 { prompt: "I will receive the same amount of money for each correct response in every part of the game.", name: 'block_stakes', correct: "False", options: Q4_5_6_7_options, required: true },
                 { prompt: "Some cards are better than others.", name: 'better_cards', correct: 'True', options: Q4_5_6_7_options, required: true },
-                { prompt: "How ‘good’ or ‘bad’ a card is will change along the game.", name: 'value_change', correct: 'True', options: Q4_5_6_7_options, required: true },
-                { prompt: "What is the goal in the game?", name: 'game_goal', correct: "The goal is to learn which card is better", options: Q8_options, required: true },
+                { prompt: "How `good` or `bad` a card is will change along the game.", name: 'value_change', correct: 'True', options: Q4_5_6_7_options, required: true },
+                { prompt: "What is the goal of the game?", name: 'game_goal', correct: "The goal is to learn which card is better", options: Q8_options, required: true },
                 { prompt: "If one card leads to more money, it is likely that the other cards will lead to less money.", name: 'value_independence', correct: "False. What I learn about one card does not tell me anything about the others. I can only learn whether a card is good or not by choosing it.", options: Q9_options, required: true },
                 { prompt: "If you use the RIGHT and not the LEFT response keys, you might win more.", name: 'location_value', correct: "False - you won't win more or less using RIGHT or LEFT response keys. Only the cards are related to your chance of winning.", options: Q10_options, required: true },
             ],
@@ -179,7 +179,7 @@
         var if_trial = {
             type: jsPsychHtmlButtonResponse,
             stimulus: "<p>Sorry. You made a mistake.<br>"
-                + "Let’s go back to the instructions. "
+                + "Let`s go back to the instructions. "
                 + "Please read them carefully before submitting your answers. <br>"
                 + "Thank you!",
             choices: ['Back to instructions']
