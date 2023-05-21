@@ -26,6 +26,12 @@
 
         var jsPsych = initJsPsych({
             on_finish: function () {
+                /*calculate bonus */
+                //var number_of_reward1 = jsPsych.data.get().filter({ phase: 'exp', trial_name: 'reward1' }).select('reward').sum()
+                //var number_of_reward2 = jsPsych.data.get().filter({ phase: 'exp', trial_name: 'reward2' }).select('reward').sum()
+                //var bonus = 0.003 * (number_of_reward1 + number_of_reward2)
+                //var bonus_string = bonus.toFixed(2)
+                //localStorage.bonus = bonus_string; //bonus to show
                 /*get data */
                 processed_data = jsPsych.data.get().json()
                 download_csv(jsPsych.data.get().csv())
@@ -107,7 +113,7 @@
             type: jsPsychInstructions,
             pages: ["<p><b><u>Welcome to the card game</u></b></p>"
                 + "<p style='text-align:left'>Your winnings in this game will earn you additional payment bonus for participating in the study."
-                + " If you do not earn any extra money in the card game, you will still receive £2.5 for completing this session of the study."
+                + " If you do not earn any extra money in the card game, you will still receive £2.13 for completing this session of the study."
                 + " However, <b>you can gain up to an extra £0.9 based on winnings in the game.</b></p>",
 
             "<p style='text-align:left'> We will now provide instructions regarding the card game. Please read them carefully. <br>"
@@ -301,7 +307,7 @@
         var current_cards_practice_trial = 0;
         var current_cards_exp_trial = 0;
         var block = 0;
-        var blocks = 4;
+        var blocks = 3;
         var curr_block_probs;
         var draw_cards;
         var drawn_cards;
@@ -348,7 +354,7 @@
             type: jsPsychHtmlKeyboardResponse,
             stimulus: show_choice,
             choices: "NO_KEYS",
-            trial_duration: 500,
+            trial_duration: 1000,
             data: { phase: 'practice', trial_name: 'choice1', trial_num: function () { return current_cards_practice_trial } },
             on_finish: function (data) {
                 data.key_selected = selected
@@ -534,7 +540,7 @@
         ------------------------------------------------------*/
         var demo_procedure_only_cards = {
             timeline: [fixation_cards, practice_cards1, practice_choice1, practice_reward1, fixation_cards, practice_cards2, practice_choice2, practice_reward2],
-            repetitions: 1 //every trial takes 500+200+2*(900+1500+500+750)+1500+500 =10 sec per trial, 6 trials = 60 sec
+            repetitions: 1 //every trial takes 2*(900+6000+1000+750) =8650 ms = 8.65 sec 
         }
 
         var instructions_loop = {
@@ -546,33 +552,33 @@
                     return false;
                 }
             }
-        }
+        } //instructions+ 1000 ms + 8.65 + test= 5 min + 9.65 sec + 3 min = 480 + 9.65 sec = 489.65 sec
 
         var test_procedure_block1 = {
             prompt: '<div class="myprompt" ><h2>' + curr_block_stakes(0)[0] + '</h2></div><br><br><br>' ,
             timeline: [fixation_cards, exp_cards, exp_choice, exp_reward],
-            repetitions: 3 // 10sec per trial - 50 trials per block.
+            repetitions: 40 // 900+ 6000+ 1000+ 750= 8650 ms= 8.65 sec per trial - 40 trials per block= 346 sec
         }
 
         var test_procedure_block2 = {
             prompt: '<div class="myprompt" ><h2>' +curr_block_stakes(1)[0] + '</h2></div><br><br><br>' ,
             timeline: [fixation_cards, exp_cards, exp_choice, exp_reward],
-            repetitions: 3 // 10sec per trial - 50 trials per block.
+            repetitions: 40 
         }
 
         var test_procedure_block3 = {
             prompt: '<div class="myprompt" ><h2>' +curr_block_stakes(2)[0] + '</h2></div><br><br><br>' ,
             timeline: [fixation_cards, exp_cards, exp_choice, exp_reward],
-            repetitions: 3 // 10sec per trial - 50 trials per block.
+            repetitions: 40 
         }
         
         var test_blocks = {
             timeline: [start_block, test_procedure_block1, finish_block, start_block, test_procedure_block2, finish_block, start_block, test_procedure_block3, finish_block],
-        };
+        }; //3*(1+ 346+ 1)= 1044 sec
 
         var full_procedure_cards = {
             timeline: [preload, instructions_loop, start_exp_cards, test_blocks]
-        } //instructions+test takes 180sec 
+        } //489.65+ 1+ 1044= 1534.65 sec = 25.5775 min
         timeline.push(full_procedure_cards)
 
 
