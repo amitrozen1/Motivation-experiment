@@ -26,13 +26,6 @@
 
         var jsPsych = initJsPsych({
             on_finish: function () {
-                /*calculate bonus */
-                //var number_of_reward1 = jsPsych.data.get().filter({ phase: 'exp', trial_name: 'reward1' }).select('reward').sum()
-                //var number_of_reward2 = jsPsych.data.get().filter({ phase: 'exp', trial_name: 'reward2' }).select('reward').sum()
-                //var bonus = 0.003 * (number_of_reward1 + number_of_reward2)
-                //var bonus_string = bonus.toFixed(2)
-                //localStorage.bonus = bonus_string; //bonus to show
-                /*get data */
                 processed_data = jsPsych.data.get().json()
                 download_csv(jsPsych.data.get().csv())
                 $.ajax({
@@ -74,18 +67,6 @@
         /*---------------------------------------------------- 
         Define images
         ------------------------------------------------------*/
-        /* if (localStorage.prolific != undefined) { //are we debugging?
-            var sign = localStorage.prolific[localStorage.prolific.length - 1];
-            if (['0', '1', '2', '3', '4', 'a', 'b', 'c'].includes(sign)) {
-                blocks_stakes = [1,5,1,5]
-            }
-            else {
-                blocks_stakes = [5,1,5,1]
-            }
-        }
-        else {
-            var blocks_stakes = [1,5,1,5]
-        } */
 
         var possible_block_stakes = [[5, 0, 1], [1, 5, 0], [0, 1, 5]]
         var blocks_stakes = possible_block_stakes[jsPsych.randomization.sampleWithReplacement([0, 1, 2], 1)[0]];
@@ -171,8 +152,10 @@
                 { prompt: "Some cards are better than others.", name: 'better_cards', correct: 'True', options: Q4_5_6_7_options, required: true },
                 { prompt: "How `good` or `bad` a card is will change along the game.", name: 'value_change', correct: 'True', options: Q4_5_6_7_options, required: true },
                 { prompt: "What is the goal of the game?", name: 'game_goal', correct: "The goal is to learn which card is better", options: Q8_options, required: true },
-                { prompt: "If one card leads to more money, it is likely that the other cards will lead to less money.", name: 'value_independence', correct: "False. What I learn about one card does not tell me anything about the others. I can only learn whether a card is good or not by choosing it.", options: Q9_options, required: true },
-                { prompt: "If you use the RIGHT and not the LEFT response keys, you might win more.", name: 'location_value', correct: "False - you won't win more or less using RIGHT or LEFT response keys. Only the cards are related to your chance of winning.", options: Q10_options, required: true },
+                { prompt: "If one card leads to more money, it is likely that the other cards will lead to less money.", name: 'value_independence', 
+                correct: "False. What I learn about one card does not tell me anything about the others. I can only learn whether a card is good or not by choosing it.", options: Q9_options, required: true },
+                { prompt: "If you use the RIGHT and not the LEFT response keys, you might win more.", name: 'location_value', 
+                correct: "False - you won't win more or less using RIGHT or LEFT response keys. Only the cards are related to your chance of winning.", options: Q10_options, required: true },
             ],
         };
 
@@ -188,8 +171,6 @@
         var check_answers = {
             timeline: [if_trial],
             conditional_function: function () {
-                // get the data from the previous trial,
-                // and check which key was pressed
                 to_repeat = false;
                 var responses_to_test = jsPsych.data.get().filter({ trial_type: 'survey-multi-choice' }).last(1).select('response').values[0]
                 for (i = 0; i < instructions_test.questions.length; i++) {
@@ -211,7 +192,6 @@
         Functions for card game
         ------------------------------------------------------*/
 
-        //samples 4 cards and puts the first as the left one, the second as the right one (with fixation between them)
         function draw_show_cards(deck) {
             drawn_cards = jsPsych.randomization.sampleWithoutReplacement(deck, 4)
             curr_block_probs = jsPsych.randomization.sampleWithoutReplacement(FB_matrix, 4)
@@ -222,7 +202,6 @@
             return left_with_tag + right_with_tag + fixation;
         }
         
-        //reveals the selection to the participant and settle the reward as 0 if the participant didn't make any choise
         function show_choice() {
 
             last_choice = jsPsych.data.getLastTrialData().values()[0].response
@@ -247,10 +226,8 @@
             return card_to_show + fixation
         }
 
-        //reveals the reward to the participant (it depents on the current trial number because the changes overtime due to the random walk)
         function show_reward(current_trial_num) {
             key_selected = jsPsych.data.getLastTrialData().values()[0].key_selected
-            //determines if the left or right card was chosen
             if (key_selected == 0) {
                 card_to_show = "<img class='card_left' src='" + left_card + "'>"
             }
@@ -263,22 +240,22 @@
             else {
                 return '<div style="font-size:40px;">wrong key!</div><br><br><div style="font-size:20px;">Please use the ‘K’ and ‘S’ keys to select the left or right card respectively. </div>'
             }
-            card_selected = jsPsych.data.getLastTrialData().values()[0].card_selected //determines the identity of the chosen card
-            prob_reward = curr_block_probs[card_selected]; //use the FB as reward func to get the propability for reward
-            prob_unreward = 1 - prob_reward; //get the propability to be unrewarded
-            reward = jsPsych.randomization.sampleWithReplacement([0, 1], 1, [prob_unreward, prob_reward])[0]; //samples the reward with the reward propabilities the were calculated
+            card_selected = jsPsych.data.getLastTrialData().values()[0].card_selected 
+            prob_reward = curr_block_probs[card_selected]; 
+            prob_unreward = 1 - prob_reward; 
+            reward = jsPsych.randomization.sampleWithReplacement([0, 1], 1, [prob_unreward, prob_reward])[0]; 
             reward_to_show = "<img class=reward src='" + reward_images[reward] + "'>" 
 
 
             return card_to_show + reward_to_show
         }
-        //determines the images on each block
+        
         function images_for_block_start() {
             images = test_deck_images.slice(block * 4, block * 4 + 4)
             return images
         }
 
-        //returns a string that indicates the stakes for the current block
+        
         function curr_block_stakes(block_number){
             if (blocks_stakes[block_number] == 1){
                 return ["low gains (1X)", "0.5 cents"]
@@ -326,18 +303,16 @@
             type: jsPsychHtmlKeyboardResponse,
             stimulus: '<div>We will now do a few practice trials. <br> Please be ready with your fingers on <b>"s"</b> and <b>"k".</b> <br><br> <b> Press any key to begin</b></div>',
             post_trial_gap: 1000,
-            //removes mouse on finish
             on_finish: function () { document.querySelector('head').insertAdjacentHTML('beforeend', '<style id="cursor-toggle"> html { cursor: none; } </style>') },
         }
 
-        var fixation_cards = {  //fixation before the cards apear
+        var fixation_cards = { 
             type: jsPsychHtmlKeyboardResponse,
             stimulus: fixation,
             choices: "NO_KEYS",
             trial_duration: 900
         }
 
-        //shows the cards using draw_show_cards func, the participant chooses one card and difine data informatino
         var practice_cards1 = {
             type: jsPsychHtmlKeyboardResponse,
             stimulus: function () {
@@ -349,7 +324,6 @@
 
         }
         
-        //dispalys the chosen card to the participant to 0.5 sec using show_choice func and saves the card to data
         var practice_choice1 = {
             type: jsPsychHtmlKeyboardResponse,
             stimulus: show_choice,
@@ -367,7 +341,6 @@
             }
         }
 
-        //dispalys the reward to the participant and saves it in data
         var practice_reward1 = {
             type: jsPsychHtmlKeyboardResponse,
             stimulus: function () {
@@ -381,7 +354,6 @@
             }
         }
 
-        // same as practice_cards and here the cards are deterministically chosen (they were sampled in practice_cards)
         var practice_cards2 = {
             type: jsPsychHtmlKeyboardResponse,
             stimulus: function () {
@@ -433,14 +405,12 @@
         Start exp part of card game
         ------------------------------------------------------*/
 
-        //displays to the participant that practice is over
         var start_exp_cards = {
             type: jsPsychHtmlKeyboardResponse,
             stimulus: '<div> Good job! Practice completed. <br> <br> We will now move on to the real game. Do your best to figure out which cards are better. Good luck!<br><br> <b>Press any key to continue.</b></div>',
             post_trial_gap: 1000,
         }
 
-        //on each block start, the playing cards will appear and the block number
         var start_block = {
             type: jsPsychHtmlKeyboardResponse,
             stimulus: function () {
@@ -460,8 +430,6 @@
 
         var exp_cards = {
             type: jsPsychHtmlKeyboardResponse,
-            //prompt: '<div style="position: absolute; padding-top: 25px; margin: auto;"><h2>' +curr_block_stakes(block)[0] + '</h2></div><br><br><br>',
-            //prompt: '<div style="position: absolute; text-align: center;" and a "left: 0; right: 0; top: 5%;"><h2>' +curr_block_stakes(block)[0] + '</h2></div><br><br><br>' ,
             stimulus: function () {
                 return  draw_show_cards(images_for_block_start())
             },
@@ -585,23 +553,6 @@
 
         jsPsych.run(timeline);
 
-        /*----------------------------------------------------
-        After experiment
-        ------------------------------------------------------*/
-        /* we don't use it here. we have after_exp
-        var timeline = [];
-        var accuracy = localStorage.accuracy;
-        var bonus = localStorage.bonus;
-        
-        var conclusion = {
-            type: 'html-keyboard-response',
-            stimulus: function () {
-                var feedback_string = '<div style="font-size:20px;">This task is over. Thank you for your participation and see you tomorrow.<br>';
-                return feedback_string
-            }
-        }
-        timeline.push(conclusion)
-        */
     </script>
 
 </body>
